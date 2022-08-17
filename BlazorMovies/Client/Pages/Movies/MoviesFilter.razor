@@ -1,0 +1,24 @@
+﻿@page "/moveis/search"
+
+<h3>MoviesFilter</h3>
+
+<div class="form-inline">
+    <div class=" form-group mb-2">
+        <label> TItle</label>
+        <input type="text" class="form-control" id="title"
+        @bind-value="title" @bind-value:event="oninput"
+        @onkeypress="@((KeyboardEventArgs e) => TitleKeyPress(e))"/>
+    </div>
+</div>
+
+@code {
+    string title = "";
+
+    private void TitleKeyPress(KeyboardEventArgs e)
+    {
+        if(e.Key == "Enter")
+        {
+            //do search
+        }
+    }
+}
