@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace BlazorMovies.Shared.Entities
 {
-    public class Genre
+    public class Person
     {
         public int Id { get; set; }
-        [Required(ErrorMessage ="Enter Custom Validation Message")]
         public string Name { get; set; }
-        public List<MoviesGenres> MoviesGenres { get; set; } = new List<MoviesGenres>();
-
+        public string Biography { get; set; }
+        public string Picture { get; set; } 
+        [Required]
+        public DateTime? DateOfBirth { get; set; }
     }
 }

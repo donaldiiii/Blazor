@@ -3,9 +3,9 @@
 
 <h3>CreateMovie</h3>
 
-<button class="btn btn-primary" @onclick="SaveMovie">Save Movie</button>
-
+<MovieForm onValidSubmit="SaveMovie" Movie="Movie" />
 @code {
+    private Movie Movie = new Movie();
     private void SaveMovie()
     {
         // Saving movie...

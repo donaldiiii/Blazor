@@ -1,24 +1,74 @@
-﻿@page "/moveis/search"
+﻿@page "/movies/search"
+@inject IRepository repository
 
 <h3>MoviesFilter</h3>
 
 <div class="form-inline">
-    <div class=" form-group mb-2">
+    <div class="form-group">
         <label> TItle</label>
         <input type="text" class="form-control" id="title"
-        @bind-value="title" @bind-value:event="oninput"
-        @onkeypress="@((KeyboardEventArgs e) => TitleKeyPress(e))"/>
+               @bind-value="title" @bind-value:event="oninput"
+               @onkeypress="@((KeyboardEventArgs e) => TitleKeyPress(e))" />
     </div>
+    <div class="form-group" mx-sm-3 mb-2>
+        <select class="form-control" @bind="selectedGenre">
+            <option value="0">
+                --Select Genre
+            </option>
+            @foreach (var genre in Genres)
+            {
+                <option value="@genre.Id">@genre.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group" mx-sm-3 mb-2>
+        <input type="checkbox" class="form-check-input" id="upcomingReleases" @bind="upcomingReleases" />
+        <label>upcomingReleases</label>
+    </div>
+    <div class="form-group" mx-sm-3 mb-2>
+        <input type="checkbox" class="form-check-input" id="inTheaters" @bind="inTheaters" />
+        <label>inTheaters</label>
+    </div>
+    <button type="button" class="btn btn-primary mb-2 mx-sm-3" @onclick="SearchForMovies"> Filter </button>
+    <button type="button" class="btn btn-danger mb-2 mx-sm-3" @onclick="Clear"> Clear </button>
 </div>
+<MoviesList Movies="Movies"></MoviesList>
 
 @code {
+    List<Movie> Movies = new List<Movie>();
     string title = "";
+    string selectedGenre = "";
+    private List<Genre> Genres = new List<Genre>(){ new Genre(){ Id =1, Name="Wee"},
+                                 new Genre(){ Id=2,Name="Waa"}};
+    bool inTheaters = false;
+    bool upcomingReleases = false;
 
+    protected override void OnInitialized()
+    {
+        Movies = repository.GetMovies();
+    }
+    private void SearchForMovies()
+    {
+        Movies = repository.GetMovies().Where(x => x.Title.Contains(title)).ToList();
+        Console.WriteLine(title);
+        Console.WriteLine(selectedGenre);
+        Console.WriteLine(inTheaters);
+        Console.WriteLine(upcomingReleases);
+    }
+
+    private void Clear()
+    {
+        Movies = repository.GetMovies();
+        title = "";
+        selectedGenre = "0";
+        inTheaters = false;
+        upcomingReleases = false;
+    }
     private void TitleKeyPress(KeyboardEventArgs e)
     {
-        if(e.Key == "Enter")
+        if (e.Key == "Enter")
         {
-            //do search
+            SearchForMovies();
         }
     }
 }

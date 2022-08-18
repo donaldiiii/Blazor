@@ -1,7 +1,17 @@
 ﻿@page "/movies/edit/{MovieId:int}"
 
 <h3>EditMovie</h3>
+<MovieForm onValidSubmit="Edit" Movie="Movie" />
 
 @code {
     [Parameter] public int MovieId { get; set; }
+    private Movie Movie;
+    protected override void OnInitialized()
+    {
+        Movie = new Movie() { Id = MovieId, Title = "mobi" };
+    }
+    private void Edit()
+    {
+        Console.WriteLine("edit");
+    }
 }
