@@ -7,10 +7,22 @@
     <MoviesList Movies="movies" />
 </div>
 
-@code{
+<CustomTypeahead SearchMethod="Search">
+    <ResultTemplate>
+       
+    </ResultTemplate>
+</CustomTypeahead>
+
+@code {
     private List<Movie> movies;
     protected async override Task OnInitializedAsync()
     {
         movies = repository.GetMovies();
+    }
+
+    private async Task<IEnumerable<string>> Search(string searchText)
+    {
+        await Task.Delay(1999);
+        return new List<string>() { "Land","Landison" };
     }
 }

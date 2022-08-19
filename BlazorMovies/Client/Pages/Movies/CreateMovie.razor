@@ -3,9 +3,17 @@
 
 <h3>CreateMovie</h3>
 
-<MovieForm onValidSubmit="SaveMovie" Movie="Movie" />
+<MovieForm OnValidSubmit="SaveMovie" Movie="Movie" NotSelectedGenres="NotSelectedGenres" />
 @code {
     private Movie Movie = new Movie();
+
+    private List<Genre> NotSelectedGenres = new List<Genre>()
+    {
+        new Genre(){Id = 1, Name = "Action"},
+        new Genre(){Id = 2, Name = "Comedy"},
+        new Genre(){Id = 3, Name = "Drama"}
+    };
+
     private void SaveMovie()
     {
         // Saving movie...
