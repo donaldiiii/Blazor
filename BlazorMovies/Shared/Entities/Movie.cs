@@ -11,6 +11,7 @@ namespace BlazorMovies.Shared.Entities
     {
         public int Id { get; set; } = 1;
         public List<MoviesGenres> MoviesGenres { get; set; } = new List<MoviesGenres>();
+        public List<MoviesActors> MoviesActors { get; set; } = new List<MoviesActors>();
         [Required]
         public string Title { get; set; }
         public string Summary { get; set; }
