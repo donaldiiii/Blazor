@@ -39,5 +39,21 @@ namespace BlazorMovies.Client.Repository
             await response.ThrowIfNotSuccessfulResponse();
             return response.Response;
         }
+
+        public async Task UpdatePerson(Person person)
+        {
+            var response = await httpService.Put(url, person);
+            await response.ThrowIfNotSuccessfulResponse();
+        }
+
+        public async Task<Person> GetPersonById(int id)
+        {
+            return await httpService.GetHelper<Person>($"{url}/{id}");
+        }
+        public async Task DeletePeople(int id)
+        {
+            var response = await httpService.Delete($"{url}/{id}");
+            await response.ThrowIfNotSuccessfulResponse();
+        }
     }
 }

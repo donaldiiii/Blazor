@@ -50,7 +50,7 @@
 
     private async Task DeleteGenres(int Id)
     {
-        //await genreRepository.DeleteGenre(Id);
+        await genreRepository.DeleteGenre(Id);
         Genres = await genreRepository.GetGenre();
     }
 }

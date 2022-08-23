@@ -29,5 +29,28 @@ namespace BlazorMovies.Server.Controllers
             await context.SaveChangesAsync();
             return genre.Id;
         }
+        [HttpPut]
+        public async Task<ActionResult> Put(Genre genre)
+        {
+            context.Attach(genre).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+            return NoContent();
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Genre>> Get(int id)
+        {
+            var genre = await context.Genres.FirstOrDefaultAsync(x => x.Id == id);
+            if (genre == null) return NotFound();
+            return genre;
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var genre = await context.Genres.FirstOrDefaultAsync(x => x.Id == id);
+            if (genre == null) return NotFound();
+            context.Remove(genre);
+            await context.SaveChangesAsync();
+            return NoContent();
+        }
     }
 }

@@ -66,7 +66,7 @@ namespace BlazorMovies.Server.Controllers
             };
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<DetailsMovieDTO>> GetById(int id)
+        public async Task<ActionResult<DetailsMovieDTO>> Get(int id)
         {
             var movie = await context.Movies.Where(x => x.Id == id)
                 .Include(x=>x.MoviesGenres).ThenInclude(x => x.Genre)
@@ -91,6 +91,15 @@ namespace BlazorMovies.Server.Controllers
                 }).ToList();
 
             return model;
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var people = await context.People.FirstOrDefaultAsync(x => x.Id == id);
+            if (people == null) return NotFound();
+            context.Remove(people);
+            await context.SaveChangesAsync();
+            return NoContent();
         }
     }
 }

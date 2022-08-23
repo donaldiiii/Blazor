@@ -7,6 +7,7 @@ namespace BlazorMovies.Client.Repository
     public interface IMovieRepository
     {
         Task<int> CreateMovie(Movie movie);
+        Task DeleteMovie(int id);
         Task<DetailsMovieDTO> GetDetailsMovieDTO(int id);
         Task<IndexPageDTO> GetIndexPageDTO();
     }

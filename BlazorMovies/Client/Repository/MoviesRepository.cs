@@ -9,7 +9,7 @@ namespace BlazorMovies.Client.Repository
 {
     public class MovieRepository : IMovieRepository
     {
-        private readonly string url = "api/movies";
+        private readonly string url = "/api/movies";
         private readonly IHttpService httpService;
         public MovieRepository(IHttpService httpService)
         {
@@ -18,20 +18,11 @@ namespace BlazorMovies.Client.Repository
 
         public async Task<IndexPageDTO> GetIndexPageDTO()
         {
-            return await Get<IndexPageDTO>(url);
+            return await httpService.GetHelper<IndexPageDTO>(url);
         }
         public async Task<DetailsMovieDTO> GetDetailsMovieDTO(int id)
         {
-            return await Get<DetailsMovieDTO>($"{url}/{id}");
-        }
-        public async Task<T> Get<T>(string url)
-        {
-            var response = await httpService.Get<T>(url);
-            if (!response.Success)
-            {
-                throw new ApplicationException(await response.GetBody());
-            }
-            return response.Response;
+            return await httpService.GetHelper<DetailsMovieDTO>($"{url}/{id}");
         }
         public async Task<int> CreateMovie(Movie movie)
         {
@@ -42,6 +33,11 @@ namespace BlazorMovies.Client.Repository
                 throw new ApplicationException(await response.GetBody());
             }
             return response.Response;
+        }
+        public async Task DeleteMovie(int id)
+        {
+            var response = await httpService.Delete($"{url}/{id}");
+            await response.ThrowIfNotSuccessfulResponse();
         }
     }
 }
