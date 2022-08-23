@@ -4,7 +4,8 @@
 <div class="form-group">
     <a class="btn btn-info" href="people/create">New People</a>
 </div>
-
+<Pagination CurrentPage="@paginationDTO.Page" TotalAmountPages="totalAmountPages"
+            SelectedPage="SelectedPage" />
 <GenericList List="People">
     <WholeListTemplate>
         <table class="table table-striped">
@@ -33,22 +34,35 @@
 @code {
 
     List<Person> People;
-
+    PaginationDTO paginationDTO = new PaginationDTO();
+    private int totalAmountPages;
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            People = await personRepository.GetPerson();
+            await LoadPeople();
         }
         catch (Exception ex)
         {
 
         }
     }
+    async Task LoadPeople()
+    {
+        var paginatedResponse = await personRepository.GetPerson(paginationDTO);
+        People = paginatedResponse.Response;
+        totalAmountPages = paginatedResponse.TotalAmountPages;
+    }
+    async Task SelectedPage(int page)
+    {
+        paginationDTO.Page = page;
+        await LoadPeople();
 
+    }
     private async Task DeletePeople(int Id)
     {
         await personRepository.DeletePeople(Id);
-        People = await personRepository.GetPerson();
+        await LoadPeople();
+
     }
 }
