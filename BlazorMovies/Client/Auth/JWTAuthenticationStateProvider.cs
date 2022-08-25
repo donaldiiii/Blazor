@@ -67,24 +67,24 @@ namespace BlazorMovies.Client.Auth
 
         public async Task TryRenewToken()
         {
-            //var expirationTimeString = await js.GetFromLocalStorage(EXPIRATIONTOKENKEY);
-            //DateTime expirationTime;
+            var expirationTimeString = await js.GetFromLocalStorage(EXPIRATIONTOKENKEY);
+            DateTime expirationTime;
 
-            //if (DateTime.TryParse(expirationTimeString, out expirationTime))
-            //{
-            //    if (IsTokenExpired(expirationTime))
-            //    {
-            //        await Logout();
-            //    }
+            if (DateTime.TryParse(expirationTimeString, out expirationTime))
+            {
+                if (IsTokenExpired(expirationTime))
+                {
+                    await Logout();
+                }
 
-            //    if (ShouldRenewToken(expirationTime))
-            //    {
-            //        var token = await js.GetFromLocalStorage(TOKENKEY);
-            //        //var newToken = await RenewToken(token);
-            //        var authState = BuildAuthenticationState(newToken);
-            //        NotifyAuthenticationStateChanged(Task.FromResult(authState));
-            //    }
-            //}
+                if (ShouldRenewToken(expirationTime))
+                {
+                    var token = await js.GetFromLocalStorage(TOKENKEY);
+                    var newToken = await RenewToken(token);
+                    var authState = BuildAuthenticationState(newToken);
+                    NotifyAuthenticationStateChanged(Task.FromResult(authState));
+                }
+            }
         }
 
         private async Task<string> RenewToken(string token)

@@ -40,6 +40,9 @@ namespace BlazorMovies.Client
             services.AddScoped<IDisplayMessage, DisplayMessage>();
             services.AddScoped<IUsersRepository, UserRepository>();
 
+            services.AddAuthorizationCore();
+
+
             services.AddScoped<JWTAuthenticationStateProvider>();
             services.AddScoped<AuthenticationStateProvider, JWTAuthenticationStateProvider>(
                 provider => provider.GetRequiredService<JWTAuthenticationStateProvider>()
@@ -49,7 +52,7 @@ namespace BlazorMovies.Client
                 provider => provider.GetRequiredService<JWTAuthenticationStateProvider>()
                 );
 
-            services.AddAuthorizationCore();
+            services.AddScoped<TokenRenewer>();
         }
     }
 }
