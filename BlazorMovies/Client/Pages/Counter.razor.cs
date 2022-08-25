@@ -11,7 +11,6 @@ namespace BlazorMovies.Client.Pages
     public partial class Counter
     {
         [Inject] IJSRuntime js { get; set; }
-
         private int currentCount = 0;
         private static int currentCountStatic = 0;
         IJSObjectReference module;

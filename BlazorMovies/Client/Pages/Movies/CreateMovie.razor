@@ -2,6 +2,7 @@
 @inject NavigationManager navigationManager
 @inject IGenreRepository genreRepository
 @inject IMovieRepository movieRepository
+@attribute [Authorize] 
 
 <h3>CreateMovie</h3>
 @if (NotSelectedGenres.Any())

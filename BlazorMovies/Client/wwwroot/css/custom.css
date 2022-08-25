@@ -69,3 +69,6 @@
     .multiple-selector-buttons button {
         margin: 5px;
     }
+.checked {
+    color: orange;
+}

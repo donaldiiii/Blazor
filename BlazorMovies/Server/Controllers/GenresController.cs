@@ -1,4 +1,5 @@
 ﻿using BlazorMovies.Shared.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ namespace BlazorMovies.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class GenresController: ControllerBase
     {
         private readonly ApplicationDbContext context;
@@ -17,6 +19,7 @@ namespace BlazorMovies.Server.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<List<Genre>>> Get()
         {
             return await context.Genres.ToListAsync();

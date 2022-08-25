@@ -2,6 +2,7 @@
 using BlazorMovies.Server.Helpers;
 using BlazorMovies.Shared.DTO;
 using BlazorMovies.Shared.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,6 +14,7 @@ namespace BlazorMovies.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles ="Admin")]
     public class PeopleController : ControllerBase
     {
 
@@ -35,7 +37,8 @@ namespace BlazorMovies.Server.Controllers
         {
             var queryable = context.People.AsQueryable();
             await HttpContext.InsertPaginationParametersInResponse(queryable, pagination.RecordsPerPage);
-            return await queryable.Paginate(pagination).ToListAsync();
+            var listOfPersons = await queryable.Paginate(pagination).ToListAsync();
+            return listOfPersons;
         }
 
         [HttpGet("search/{searchText}")]

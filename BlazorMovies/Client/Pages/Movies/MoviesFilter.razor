@@ -3,6 +3,7 @@
 @inject IMovieRepository moviesRepository
 @inject IGenreRepository genreRepository
 @inject NavigationManager navigationManager
+@attribute [Authorize]
 
 <h3>MoviesFilter</h3>
 <EditForm Model="filterMoviesDTO">

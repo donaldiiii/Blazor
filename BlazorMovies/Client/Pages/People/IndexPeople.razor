@@ -1,5 +1,6 @@
 ﻿@page "/people"
 @inject IPersonRepository personRepository
+@attribute [Authorize]
 
 <div class="form-group">
     <a class="btn btn-info" href="people/create">New People</a>
